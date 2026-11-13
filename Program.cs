@@ -3,6 +3,13 @@ builder.WebHost.UseUrls("http://0.0.0.0:8080");
 var app = builder.Build();
 
 app.MapGet("/health", () => Results.Text("OK\n"));
+app.MapGet("/log-test", (ILogger<Program> log) =>
+{
+    log.LogInformation("Log test info");
+    log.LogWarning("Log test warning");
+    log.LogError("Log test error");
+    return Results.Text("logged\n");
+});
 app.MapGet("/demo", () =>
 {
     var greeting = Environment.GetEnvironmentVariable("SAMPLE_GREETING");
